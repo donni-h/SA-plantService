@@ -11,4 +11,6 @@ public interface IPlantService {
     void deletePlant(long id);
 
     Iterable<Plant> getAllPlants();
+
+    Plant getPlant(long id);
 }
