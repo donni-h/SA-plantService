@@ -1,12 +1,14 @@
 package de.htw.saplantservice.core.domain.model;
 
 import jakarta.persistence.*;
+import jakarta.validation.constraints.NotBlank;
 import jakarta.validation.constraints.NotNull;
+import jakarta.validation.constraints.PositiveOrZero;
+import jakarta.validation.constraints.Size;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
 
-import javax.validation.constraints.Size;
 
 @Entity //Marks class as database Entity
 @Table  //Table in Data Base (here you can name the table)
@@ -25,21 +27,29 @@ public class Plant {
             strategy = GenerationType.SEQUENCE,
             generator = "plant_sequence"
     )
-    private Long id;
+    private Long plantId;
 
-    @NotNull
-    @Size(max = 50)
+    @Column(nullable = false)
+    @NotNull (message = "Name cannot be null")
+    @NotBlank(message = "Name cannot be blank")
+    @Size(min = 1, max = 50, message = "Name must be between 1 and 50 characters")
     private String name;
 
-    @NotNull
-    @Size(max = 50)
+    @Column(nullable = false)
+    @NotNull (message = "Latin name cannot be null")
+    @NotBlank(message = "Latin name cannot be blank")
+    @Size(min = 1, max = 50)
     private String latinName;
 
-    @NotNull
-    private String description;
+    @Column(nullable = false)
+    @NotNull (message = "Price cannot be null")
+    @PositiveOrZero
+    private Float price;
 
-    @NotNull
-    private float price;
+    @Column(nullable = false)
+    @NotNull (message = "Amount cannot be null")
+    @PositiveOrZero
+    private Integer amount;
 
     @Enumerated(EnumType.STRING)
     private Category category;
@@ -50,9 +60,9 @@ public class Plant {
     @Enumerated(EnumType.STRING)
     private WaterDemand waterDemand;
 
-    private String imageLink;
+    private String description;
 
-    private int amount;
+    private String imageLink;
 
     public Plant(String name, String latinName, String description, float price, Category category, Height height,
                  WaterDemand waterDemand, String imageLink, int amount) {
@@ -70,7 +80,7 @@ public class Plant {
     @Override
     public String toString() {
         return "Plant{" +
-                "id=" + id +
+                "plantId=" + plantId +
                 ", name='" + name + '\'' +
                 ", latinName='" + latinName + '\'' +
                 ", description='" + description + '\'' +
