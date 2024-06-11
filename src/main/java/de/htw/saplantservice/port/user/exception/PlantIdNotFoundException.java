@@ -1,4 +1,4 @@
-package de.htw.saplantservice.exception;
+package de.htw.saplantservice.port.user.exception;
 
 public class PlantIdNotFoundException extends RuntimeException{
     public PlantIdNotFoundException(Long plantId){

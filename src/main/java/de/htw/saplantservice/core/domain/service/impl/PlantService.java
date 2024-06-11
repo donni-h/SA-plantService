@@ -4,10 +4,9 @@ import de.htw.saplantservice.core.domain.model.Category;
 import de.htw.saplantservice.core.domain.model.Plant;
 import de.htw.saplantservice.core.domain.service.interfaces.IPlantRepository;
 import de.htw.saplantservice.core.domain.service.interfaces.IPlantService;
-import de.htw.saplantservice.exception.NoPlantsFoundException;
-import de.htw.saplantservice.exception.PlantIdNotFoundException;
-import de.htw.saplantservice.exception.PlantsNotFoundByNameException;
-import de.htw.saplantservice.exception.PlantsNotFoundInCategoryException;
+import de.htw.saplantservice.port.user.exception.NoPlantsFoundException;
+import de.htw.saplantservice.port.user.exception.PlantIdAlreadyExistsException;
+import de.htw.saplantservice.port.user.exception.PlantIdNotFoundException;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
@@ -26,6 +25,8 @@ public class PlantService implements IPlantService {
     @Override
     public void createPlant(Plant plant) throws IllegalArgumentException{
         if (plant == null) throw new IllegalArgumentException("Plant cannot be null.");
+        Long plantId = plant.getPlantId();
+        if (plantRepository.findById(plantId).isPresent()) throw new PlantIdAlreadyExistsException(plantId);
         plantRepository.save(plant);
     }
 
@@ -37,28 +38,28 @@ public class PlantService implements IPlantService {
     }
 
     @Override
-    public List<Plant> getAllPlants() throws NoPlantsFoundException{
+    public List<Plant> getAllPlants() throws NoPlantsFoundException {
         List<Plant> plants = plantRepository.findAll();
         if (plants.isEmpty()) throw new NoPlantsFoundException();
         return plants;
     }
 
     @Override
-    public List<Plant> getPlantsByname(String plantName) throws PlantsNotFoundByNameException,
+    public List<Plant> getPlantsByname(String plantName) throws NoPlantsFoundException,
             IllegalArgumentException{
         if (plantName == null) throw new IllegalArgumentException("Plant name cannot be null.");
         if (plantName.isEmpty()) throw new IllegalArgumentException("Plant name cannot be emtpy.");
         List<Plant> plants = plantRepository.findByName(plantName);
-        if (plants.isEmpty()) throw new PlantsNotFoundByNameException(plantName);
+        if (plants.isEmpty()) throw new NoPlantsFoundException(plantName);
         return plants;
     }
 
     @Override
-    public List<Plant> getPlantsByCategory(Category plantCategory) throws PlantsNotFoundInCategoryException,
+    public List<Plant> getPlantsByCategory(Category plantCategory) throws NoPlantsFoundException,
             IllegalArgumentException{
         if (plantCategory == null) throw new IllegalArgumentException("Category cannot be null.");
         List<Plant> plants = plantRepository.findByCategory(plantCategory);
-        if (plants.isEmpty()) throw new PlantsNotFoundInCategoryException(plantCategory);
+        if (plants.isEmpty()) throw new NoPlantsFoundException(plantCategory);
         return plants;
     }
 
