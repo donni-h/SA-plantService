@@ -26,7 +26,9 @@ public class PlantService implements IPlantService {
     public void createPlant(Plant plant) throws IllegalArgumentException{
         if (plant == null) throw new IllegalArgumentException("Plant cannot be null.");
         Long plantId = plant.getPlantId();
-        if (plantRepository.findById(plantId).isPresent()) throw new PlantIdAlreadyExistsException(plantId);
+        if (plantId != null){
+            if (plantRepository.findById(plantId).isPresent()) throw new PlantIdAlreadyExistsException(plantId);
+        }
         plantRepository.save(plant);
     }
 
