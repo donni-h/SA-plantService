@@ -22,7 +22,7 @@ public class PlantService implements IPlantService {
     }
 
     @Override
-    public void createPlant(Plant plant) throws IllegalArgumentException{
+    public void createPlant(Plant plant) throws PlantIdAlreadyExistsException, IllegalArgumentException{
         if (plant == null) throw new IllegalArgumentException("Plant cannot be null.");
         Long plantId = plant.getPlantId();
         if (plantId != null){

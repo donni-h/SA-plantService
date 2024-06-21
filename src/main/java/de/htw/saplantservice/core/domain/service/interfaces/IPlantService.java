@@ -2,13 +2,14 @@ package de.htw.saplantservice.core.domain.service.interfaces;
 
 import de.htw.saplantservice.core.domain.model.Category;
 import de.htw.saplantservice.core.domain.model.Plant;
+import de.htw.saplantservice.port.user.exception.PlantIdAlreadyExistsException;
 import de.htw.saplantservice.port.user.exception.PlantIdNotFoundException;
 
 import java.util.List;
 
 public interface IPlantService {
 
-    void createPlant(Plant plant) throws IllegalArgumentException;
+    void createPlant(Plant plant) throws PlantIdAlreadyExistsException, IllegalArgumentException;
     Plant getPlantById(Long plantId) throws PlantIdNotFoundException, IllegalArgumentException;
     List<Plant> getAllPlants();
     List<Plant> getPlantsByname(String plantName) throws IllegalArgumentException;
