@@ -53,10 +53,10 @@ public class PlantController {
         return plantService.getPlantsByCategory(plantCategory);
     }
 
-    @PutMapping(path = "/plants/category/{category}")
+    @PutMapping(path = "/plant/{plantId}")
     @ResponseStatus(HttpStatus.OK)
     public void updatePlantAmount(
-            @PathVariable("category") Long plantId,
+            @PathVariable("plantId") Long plantId,
             @RequestParam(required = true) Integer newAmount) throws
             PlantIdNotFoundException, IllegalArgumentException{
         plantService.updatePlantAmount(plantId, newAmount);
