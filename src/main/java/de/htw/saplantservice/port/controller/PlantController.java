@@ -3,7 +3,6 @@ package de.htw.saplantservice.port.controller;
 import de.htw.saplantservice.core.domain.model.Category;
 import de.htw.saplantservice.core.domain.model.Plant;
 import de.htw.saplantservice.core.domain.service.interfaces.IPlantService;
-import de.htw.saplantservice.port.user.exception.NoPlantsFoundException;
 import de.htw.saplantservice.port.user.exception.PlantIdAlreadyExistsException;
 import de.htw.saplantservice.port.user.exception.PlantIdNotFoundException;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -35,21 +34,21 @@ public class PlantController {
 
     @GetMapping(path = "/plants")
     @ResponseStatus(HttpStatus.OK)
-    public @ResponseBody List<Plant> getAllPlants() throws NoPlantsFoundException {
+    public @ResponseBody List<Plant> getAllPlants(){
         return plantService.getAllPlants();
     }
 
     @GetMapping(path = "/plants/name/{name}")
     @ResponseStatus(HttpStatus.OK)
     public @ResponseBody List<Plant> getPlantsByName(@PathVariable("name") String plantName) throws
-            NoPlantsFoundException, IllegalArgumentException{
+            IllegalArgumentException{
         return plantService.getPlantsByname(plantName);
     }
 
     @GetMapping(path = "/plants/category/{category}")
     @ResponseStatus(HttpStatus.OK)
     public @ResponseBody List<Plant> getPlantsByCategory(@PathVariable("category") Category plantCategory) throws
-            NoPlantsFoundException, IllegalArgumentException{
+            IllegalArgumentException{
         return plantService.getPlantsByCategory(plantCategory);
     }
 

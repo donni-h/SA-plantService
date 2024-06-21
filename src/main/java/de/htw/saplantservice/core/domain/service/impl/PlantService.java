@@ -4,7 +4,6 @@ import de.htw.saplantservice.core.domain.model.Category;
 import de.htw.saplantservice.core.domain.model.Plant;
 import de.htw.saplantservice.core.domain.service.interfaces.IPlantRepository;
 import de.htw.saplantservice.core.domain.service.interfaces.IPlantService;
-import de.htw.saplantservice.port.user.exception.NoPlantsFoundException;
 import de.htw.saplantservice.port.user.exception.PlantIdAlreadyExistsException;
 import de.htw.saplantservice.port.user.exception.PlantIdNotFoundException;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -40,28 +39,23 @@ public class PlantService implements IPlantService {
     }
 
     @Override
-    public List<Plant> getAllPlants() throws NoPlantsFoundException {
+    public List<Plant> getAllPlants(){
         List<Plant> plants = plantRepository.findAll();
-        if (plants.isEmpty()) throw new NoPlantsFoundException();
         return plants;
     }
 
     @Override
-    public List<Plant> getPlantsByname(String plantName) throws NoPlantsFoundException,
-            IllegalArgumentException{
+    public List<Plant> getPlantsByname(String plantName) throws IllegalArgumentException{
         if (plantName == null) throw new IllegalArgumentException("Plant name cannot be null.");
         if (plantName.isEmpty()) throw new IllegalArgumentException("Plant name cannot be emtpy.");
         List<Plant> plants = plantRepository.findByName(plantName);
-        if (plants.isEmpty()) throw new NoPlantsFoundException(plantName);
         return plants;
     }
 
     @Override
-    public List<Plant> getPlantsByCategory(Category plantCategory) throws NoPlantsFoundException,
-            IllegalArgumentException{
+    public List<Plant> getPlantsByCategory(Category plantCategory) throws IllegalArgumentException{
         if (plantCategory == null) throw new IllegalArgumentException("Category cannot be null.");
         List<Plant> plants = plantRepository.findByCategory(plantCategory);
-        if (plants.isEmpty()) throw new NoPlantsFoundException(plantCategory);
         return plants;
     }
 
