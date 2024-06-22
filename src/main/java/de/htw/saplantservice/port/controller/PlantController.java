@@ -75,8 +75,8 @@ public class PlantController {
             @NotNull(message = "PlantId cannot be null")
             Long plantId,
             @RequestParam(required = true)
-            @PositiveOrZero(message = "PlantId must be positive or zero")
-            @NotNull(message = "Amount cannot be null")
+            @PositiveOrZero(message = "newAmount must be positive or zero")
+            @NotNull(message = "newAmount cannot be null")
             Integer newAmount) throws PlantIdNotFoundException{
         plantService.updatePlantAmount(plantId, newAmount);
     }
