@@ -27,22 +27,20 @@ public class Plant {
     @Positive(message = "plantId must be positive")
     private Long plantId;
 
-    @NotNull (message = "Name cannot be null")
-    @NotBlank(message = "Name cannot be blank")
+    @NotNull(message = "name cannot be null")
     @Size(min = 1, max = 50, message = "Name must be between 1 and 50 characters")
     private String name;
 
-    @NotNull (message = "Latin name cannot be null")
-    @NotBlank(message = "Latin name cannot be blank")
-    @Size(min = 1, max = 50)
+    @NotNull(message = "latinName cannot be null")
+    @Size(min = 1, max = 50, message = "latinName must be between 1 and 50 characters")
     private String latinName;
 
     @NotNull (message = "Price cannot be null")
-    @PositiveOrZero
+    @PositiveOrZero (message = "price has to be positive")
     private Float price;
 
     @NotNull (message = "Amount cannot be null")
-    @PositiveOrZero
+    @PositiveOrZero (message = "amount hast to be positive")
     private Integer amount;
 
     @Enumerated(EnumType.STRING)
