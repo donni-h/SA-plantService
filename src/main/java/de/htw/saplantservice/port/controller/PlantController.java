@@ -81,10 +81,10 @@ public class PlantController {
         plantService.updatePlantAmount(plantId, newAmount);
     }
 
-    @DeleteMapping(path = "/plant")
+    @DeleteMapping(path = "/plant/{plantId}")
     @ResponseStatus(HttpStatus.OK)
     public void deletePlant(
-            @RequestBody
+            @PathVariable("plantId")
             @Positive(message = "PlantId must be positive")
             @NotNull(message = "PlantId cannot be null")
             Long plantId) throws PlantIdNotFoundException{
