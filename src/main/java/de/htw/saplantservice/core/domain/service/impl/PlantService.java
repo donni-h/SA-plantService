@@ -22,8 +22,7 @@ public class PlantService implements IPlantService {
     }
 
     @Override
-    public void createPlant(Plant plant) throws PlantIdAlreadyExistsException, IllegalArgumentException{
-        if (plant == null) throw new IllegalArgumentException("Plant cannot be null.");
+    public void createPlant(Plant plant) throws PlantIdAlreadyExistsException{
         Long plantId = plant.getPlantId();
         if (plantId != null){
             if (plantRepository.findById(plantId).isPresent()) throw new PlantIdAlreadyExistsException(plantId);
@@ -32,8 +31,7 @@ public class PlantService implements IPlantService {
     }
 
     @Override
-    public Plant getPlantById(Long plantId) throws PlantIdNotFoundException, IllegalArgumentException {
-        if(plantId == null) throw new IllegalArgumentException("plantId cannot be null");
+    public Plant getPlantById(Long plantId) throws PlantIdNotFoundException {
         return plantRepository.findById(plantId)
                 .orElseThrow(() -> new PlantIdNotFoundException(plantId));
     }
@@ -45,26 +43,20 @@ public class PlantService implements IPlantService {
     }
 
     @Override
-    public List<Plant> getPlantsByname(String plantName) throws IllegalArgumentException{
-        if (plantName == null) throw new IllegalArgumentException("Plant name cannot be null.");
-        if (plantName.isEmpty()) throw new IllegalArgumentException("Plant name cannot be emtpy.");
+    public List<Plant> getPlantsByname(String plantName){
         List<Plant> plants = plantRepository.findByName(plantName);
         return plants;
     }
 
     @Override
-    public List<Plant> getPlantsByCategory(Category plantCategory) throws IllegalArgumentException{
-        if (plantCategory == null) throw new IllegalArgumentException("Category cannot be null.");
+    public List<Plant> getPlantsByCategory(Category plantCategory){
         List<Plant> plants = plantRepository.findByCategory(plantCategory);
         return plants;
     }
 
     @Transactional
     @Override
-    public void updatePlantAmount(Long plantId, Integer newAmount) throws PlantIdNotFoundException,
-            IllegalArgumentException {
-        if(plantId == null) throw new IllegalArgumentException("PlantId cannot be null.");
-        if(newAmount == null) throw new IllegalArgumentException("new Amount cannot be null.");
+    public void updatePlantAmount(Long plantId, Integer newAmount) throws PlantIdNotFoundException{
         Plant existingPlant = plantRepository.findById(plantId)
                 .orElseThrow(() -> new PlantIdNotFoundException(plantId));
         existingPlant.setAmount(newAmount);
