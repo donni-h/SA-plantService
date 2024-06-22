@@ -24,7 +24,7 @@ public class Plant {
             strategy = GenerationType.SEQUENCE,
             generator = "plant_sequence"
     )
-    @Positive
+    @Positive(message = "plantId must be positive")
     private Long plantId;
 
     @NotNull (message = "Name cannot be null")
