@@ -12,7 +12,7 @@ public interface IPlantService {
     void createPlant(Plant plant) throws PlantIdAlreadyExistsException, IllegalArgumentException;
     Plant getPlantById(Long plantId) throws PlantIdNotFoundException, IllegalArgumentException;
     List<Plant> getAllPlants();
-    List<Plant> getPlantsByname(String plantName) throws IllegalArgumentException;
+    List<Plant> getPlantsByName(String plantName) throws IllegalArgumentException;
     List<Plant> getPlantsByCategory(Category plantCategory) throws IllegalArgumentException;
     void updatePlantAmount(Long plantId, Integer newAmount) throws PlantIdNotFoundException,
             IllegalArgumentException;

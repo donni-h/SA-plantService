@@ -43,7 +43,7 @@ public class PlantService implements IPlantService {
     }
 
     @Override
-    public List<Plant> getPlantsByname(String plantName){
+    public List<Plant> getPlantsByName(String plantName){
         List<Plant> plants = plantRepository.findByName(plantName);
         return plants;
     }

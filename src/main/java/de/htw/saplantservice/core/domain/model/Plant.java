@@ -27,24 +27,20 @@ public class Plant {
     @Positive
     private Long plantId;
 
-    @Column(nullable = false)
     @NotNull (message = "Name cannot be null")
     @NotBlank(message = "Name cannot be blank")
     @Size(min = 1, max = 50, message = "Name must be between 1 and 50 characters")
     private String name;
 
-    @Column(nullable = false)
     @NotNull (message = "Latin name cannot be null")
     @NotBlank(message = "Latin name cannot be blank")
     @Size(min = 1, max = 50)
     private String latinName;
 
-    @Column(nullable = false)
     @NotNull (message = "Price cannot be null")
     @PositiveOrZero
     private Float price;
 
-    @Column(nullable = false)
     @NotNull (message = "Amount cannot be null")
     @PositiveOrZero
     private Integer amount;
