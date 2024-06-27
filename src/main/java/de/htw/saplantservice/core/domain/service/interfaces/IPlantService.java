@@ -1,14 +1,20 @@
 package de.htw.saplantservice.core.domain.service.interfaces;
 
+import de.htw.saplantservice.core.domain.model.Category;
 import de.htw.saplantservice.core.domain.model.Plant;
+import de.htw.saplantservice.port.user.exception.PlantIdAlreadyExistsException;
+import de.htw.saplantservice.port.user.exception.PlantIdNotFoundException;
+
+import java.util.List;
 
 public interface IPlantService {
 
-    void createPlant(Plant plant);
+    void createPlant(Plant plant) throws PlantIdAlreadyExistsException;
+    Plant getPlantById(Long plantId) throws PlantIdNotFoundException;
+    List<Plant> getAllPlants();
+    List<Plant> getPlantsByName(String plantName);
+    List<Plant> getPlantsByCategory(Category plantCategory);
+    void updatePlantAmount(Long plantId, Integer newAmount) throws PlantIdNotFoundException;
 
-    void updatePlant(Plant plant);
-
-    void deletePlant(long id);
-
-    Iterable<Plant> getAllPlants();
+    void deletePlant(Long plantId) throws PlantIdNotFoundException;
 }
