@@ -22,11 +22,7 @@ public class PlantService implements IPlantService {
     }
 
     @Override
-    public void createPlant(Plant plant) throws PlantIdAlreadyExistsException{
-        Long plantId = plant.getPlantId();
-        if (plantId != null){
-            if (plantRepository.findById(plantId).isPresent()) throw new PlantIdAlreadyExistsException(plantId);
-        }
+    public void createPlant(Plant plant){
         plantRepository.save(plant);
     }
 

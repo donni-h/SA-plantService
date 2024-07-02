@@ -9,7 +9,7 @@ import java.util.List;
 
 public interface IPlantService {
 
-    void createPlant(Plant plant) throws PlantIdAlreadyExistsException;
+    void createPlant(Plant plant);
     Plant getPlantById(Long plantId) throws PlantIdNotFoundException;
     List<Plant> getAllPlants();
     List<Plant> getPlantsByName(String plantName);

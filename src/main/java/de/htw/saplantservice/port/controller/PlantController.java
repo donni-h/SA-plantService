@@ -28,7 +28,7 @@ public class PlantController {
 
     @PostMapping(path = "/plant")
     @ResponseStatus(HttpStatus.OK)
-    public void createPlant(@Valid @RequestBody Plant plant) throws PlantIdAlreadyExistsException {
+    public void createPlant(@Valid @RequestBody Plant plant){
         plantService.createPlant(plant);
     }
 
