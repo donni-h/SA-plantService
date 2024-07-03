@@ -3,7 +3,6 @@ package de.htw.saplantservice.port.controller;
 import de.htw.saplantservice.core.domain.model.Category;
 import de.htw.saplantservice.core.domain.model.Plant;
 import de.htw.saplantservice.core.domain.service.interfaces.IPlantService;
-import de.htw.saplantservice.port.user.exception.PlantIdAlreadyExistsException;
 import de.htw.saplantservice.port.user.exception.PlantIdNotFoundException;
 import jakarta.validation.Valid;
 import jakarta.validation.constraints.NotBlank;
