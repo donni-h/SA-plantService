@@ -77,27 +77,6 @@ Content-Type: application/json
 ###
 #createPlant()
 #NEGATIVE TEST
-#SCENARIO: plantId that is already taken
-#EXCEPTION THROWN BY: Service
-POST http://localhost:8080/plant
-Content-Type: application/json
-
-{
-  "plantId": 1,
-  "name": "Baum",
-  "latinName": "Pflanzus Magnifisus",
-  "price": 6,
-  "amount": 3,
-  "category": "BAUM",
-  "height": "S",
-  "waterDemand": "HIGH",
-  "description": "Super toller Baum echt schick",
-  "imageLink": "Nices Foto"
-}
-
-###
-#createPlant()
-#NEGATIVE TEST
 #SCENARIO: null plant
 #EXCEPTION THROWN BY: Controller
 POST http://localhost:8080/plant
@@ -523,7 +502,8 @@ Content-Type: application/json
 #getPlantsByCategory()
 #NEGATIVE PATH TEST
 #SCENARIO: Integer instead of String
-#EXCEPTION THROWN BY: Controller -> Interpretes Int like String, Same exception as above
+#EXCEPTION THROWN BY: Controller
+# -> Interpretes Int like String, Same exception as above because because no Category has Int Name
 GET http://localhost:8080/plants/category/11423
 Content-Type: application/json
 

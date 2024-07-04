@@ -1,4 +1,4 @@
-package de.htw.saplantservice.port.controller;
+package de.htw.saplantservice.port.user.controller;
 
 import de.htw.saplantservice.core.domain.model.Category;
 import de.htw.saplantservice.core.domain.model.Plant;
