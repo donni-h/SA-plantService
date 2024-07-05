@@ -21,8 +21,8 @@ public class PlantService implements IPlantService {
     }
 
     @Override
-    public void createPlant(Plant plant){
-        plantRepository.save(plant);
+    public Plant createPlant(Plant plant){
+        return plantRepository.save(plant);
     }
 
     @Override
@@ -51,10 +51,11 @@ public class PlantService implements IPlantService {
 
     @Transactional
     @Override
-    public void updatePlantAmount(Long plantId, Integer newAmount) throws PlantIdNotFoundException{
+    public Plant updatePlantAmount(Long plantId, Integer newAmount) throws PlantIdNotFoundException{
         Plant existingPlant = plantRepository.findById(plantId)
                 .orElseThrow(() -> new PlantIdNotFoundException(plantId));
         existingPlant.setAmount(newAmount);
+        return existingPlant;
     }
 
     @Override

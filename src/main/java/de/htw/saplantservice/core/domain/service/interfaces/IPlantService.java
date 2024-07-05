@@ -8,12 +8,12 @@ import java.util.List;
 
 public interface IPlantService {
 
-    void createPlant(Plant plant);
+    Plant createPlant(Plant plant);
     Plant getPlantById(Long plantId) throws PlantIdNotFoundException;
     List<Plant> getAllPlants();
     List<Plant> getPlantsByName(String plantName);
     List<Plant> getPlantsByCategory(Category plantCategory);
-    void updatePlantAmount(Long plantId, Integer newAmount) throws PlantIdNotFoundException;
+    Plant updatePlantAmount(Long plantId, Integer newAmount) throws PlantIdNotFoundException;
 
     void deletePlant(Long plantId) throws PlantIdNotFoundException;
 }
