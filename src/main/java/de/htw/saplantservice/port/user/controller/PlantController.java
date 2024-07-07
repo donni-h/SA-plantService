@@ -91,4 +91,10 @@ public class PlantController {
             Long plantId) throws PlantIdNotFoundException{
         plantService.deletePlant(plantId);
     }
+
+    @DeleteMapping(path = "/plants")
+    @ResponseStatus(HttpStatus.OK)
+    public void deleteAllPlants(){
+        plantService.deleteAllPlants();
+    }
 }

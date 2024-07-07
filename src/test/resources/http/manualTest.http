@@ -619,3 +619,13 @@ Content-Type: application/json
 #EXCEPTION THROWN BY: Controller
 DELETE http://localhost:8080/plant/daw
 Content-Type: application/json
+
+###
+#DELETEALLPLANTS() TESTS:
+
+###
+#deleteAllPlants()
+#HAPPY PATH TEST
+#SCENARIO: Delete All Plants
+DELETE http://localhost:8080/plants
+Content-Type: application/json

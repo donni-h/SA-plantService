@@ -16,4 +16,5 @@ public interface IPlantService {
     Plant updatePlantAmount(Long plantId, Integer newAmount) throws PlantIdNotFoundException;
 
     void deletePlant(Long plantId) throws PlantIdNotFoundException;
+    void deleteAllPlants();
 }

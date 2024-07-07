@@ -63,4 +63,9 @@ public class PlantService implements IPlantService {
         if(!plantRepository.existsById(plantId)) throw new PlantIdNotFoundException(plantId);
         plantRepository.deleteById(plantId);
     }
+
+    @Override
+    public void deleteAllPlants(){
+        plantRepository.deleteAll();
+    }
 }
