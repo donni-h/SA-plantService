@@ -27,8 +27,8 @@ public class PlantController {
 
     @PostMapping(path = "/plant")
     @ResponseStatus(HttpStatus.OK)
-    public void createPlant(@Valid @RequestBody Plant plant){
-        plantService.createPlant(plant);
+    public @ResponseBody Plant createPlant(@Valid @RequestBody Plant plant){
+        return plantService.createPlant(plant);
     }
 
     @GetMapping(path = "/plant/{plantId}")
@@ -68,7 +68,7 @@ public class PlantController {
 
     @PutMapping(path = "/plant/{plantId}")
     @ResponseStatus(HttpStatus.OK)
-    public void updatePlantAmount(
+    public @ResponseBody Plant updatePlantAmount(
             @PathVariable("plantId")
             @Positive(message = "PlantId must be positive")
             @NotNull(message = "PlantId cannot be null")
@@ -77,7 +77,7 @@ public class PlantController {
             @PositiveOrZero(message = "newAmount must be positive or zero")
             @NotNull(message = "newAmount cannot be null")
             Integer newAmount) throws PlantIdNotFoundException{
-        plantService.updatePlantAmount(plantId, newAmount);
+        return plantService.updatePlantAmount(plantId, newAmount);
     }
 
     @DeleteMapping(path = "/plant/{plantId}")
