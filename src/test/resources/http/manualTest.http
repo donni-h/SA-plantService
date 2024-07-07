@@ -620,8 +620,10 @@ Content-Type: application/json
 DELETE http://localhost:8080/plant/daw
 Content-Type: application/json
 
+
 ###
 #DELETEALLPLANTS() TESTS:
+
 
 ###
 #deleteAllPlants()
