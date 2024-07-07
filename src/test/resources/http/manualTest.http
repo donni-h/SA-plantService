@@ -42,26 +42,6 @@ Content-Type: application/json
 ###
 #createPlant()
 #HAPPY PATH TEST
-#SCENARIO: with given plantId -> should not change the id because id is created automatically
-POST http://localhost:8080/plant
-Content-Type: application/json
-
-{
-  "plantId": 3,
-  "name": "Baum",
-  "latinName": "Pflanzus Magnifisus",
-  "price": 6,
-  "amount": 3,
-  "category": "BAUM",
-  "height": "S",
-  "waterDemand": "HIGH",
-  "description": "Super toller Baum echt schick",
-  "imageLink": "Nices Foto"
-}
-
-###
-#createPlant()
-#HAPPY PATH TEST
 #SCENARIO: with given category, height, waterDemand, description and imageLink being null
 POST http://localhost:8080/plant
 Content-Type: application/json
@@ -72,6 +52,27 @@ Content-Type: application/json
   "latinName": "Pflanzus Magnifisus",
   "price": 6,
   "amount": 3
+}
+
+###
+#createPlant()
+#NEGATIVE PATH TEST
+#SCENARIO: with given plantId that should not be given and is created automatically (to not abuse create() as update())
+#EXCEPTION THROWN BY: Controller
+POST http://localhost:8080/plant
+Content-Type: application/json
+
+{
+  "plantId": 23,
+  "name": "Baum",
+  "latinName": "Pflanzus Cringe",
+  "price": 6,
+  "amount": 3,
+  "category": "BAUM",
+  "height": "S",
+  "waterDemand": "HIGH",
+  "description": "Super toller Baum echt schick",
+  "imageLink": "Nices Foto"
 }
 
 ###
@@ -391,7 +392,7 @@ Content-Type: application/json
 #getPlantById()
 #HAPPY PATH TEST
 #SCENARIO: normal
-GET http://localhost:8080/plant/1
+GET http://localhost:8080/plant/5
 Content-Type: application/json
 
 ###
