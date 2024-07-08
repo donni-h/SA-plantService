@@ -39,8 +39,9 @@ public class PlantRepositoryTest {
 
     @BeforeEach
     void setUp(){
-        Plant plant = new Plant("Pflanzus Longus", "Pflanzisimus Longimus", "coole Pflanze",
-                5.40f, Category.ZIMMERPFLANZE, Height.L, WaterDemand.MEDIUM, "cooles Bild", 15);
+        Plant plant = new Plant("Pflanzus Longus", "Pflanzisimus Longimus", 5.40f,
+                15, Category.ZIMMERPFLANZE, Height.L, WaterDemand.MEDIUM, "coole Pflanze",
+                "cooles Bild");
         iPlantRepository.save(plant);
     }
 

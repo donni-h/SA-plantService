@@ -47,7 +47,6 @@ POST http://localhost:8080/plant
 Content-Type: application/json
 
 {
-  "plantId": 3,
   "name": "Baum",
   "latinName": "Pflanzus Magnifisus",
   "price": 6,

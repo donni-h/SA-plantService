@@ -56,17 +56,31 @@ public class Plant {
 
     private String imageLink;
 
-    public Plant(String name, String latinName, String description, float price, Category category, Height height,
-                 WaterDemand waterDemand, String imageLink, int amount) {
+    public Plant(Long plantId, String name, String latinName, Float price, Integer amount, Category category,
+                 Height height, WaterDemand waterDemand, String description, String imageLink) {
+        this.plantId = plantId;
         this.name = name;
         this.latinName = latinName;
-        this.description = description;
         this.price = price;
+        this.amount = amount;
         this.category = category;
         this.height = height;
         this.waterDemand = waterDemand;
+        this.description = description;
         this.imageLink = imageLink;
+    }
+
+    public Plant(String name, String latinName, Float price, Integer amount, Category category, Height height,
+                 WaterDemand waterDemand, String description, String imageLink) {
+        this.name = name;
+        this.latinName = latinName;
+        this.price = price;
         this.amount = amount;
+        this.category = category;
+        this.height = height;
+        this.waterDemand = waterDemand;
+        this.description = description;
+        this.imageLink = imageLink;
     }
 
     @Override
