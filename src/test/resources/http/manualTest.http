@@ -41,22 +41,20 @@ Content-Type: application/json
 
 ###
 #createPlant()
-#HAPPY PATH TEST
-#SCENARIO: with given category, height, waterDemand, description and imageLink being null
+#NEGATIVE TEST
+#SCENARIO: null plant
+#EXCEPTION THROWN BY: Controller
 POST http://localhost:8080/plant
 Content-Type: application/json
 
 {
-  "name": "Baum",
-  "latinName": "Pflanzus Magnifisus",
-  "price": 6,
-  "amount": 3
 }
 
 ###
 #createPlant()
 #NEGATIVE PATH TEST
-#SCENARIO: with given plantId that should not be given and is created automatically (to not abuse create() as update())
+#SCENARIO: with  plantId that should not be given because it is created automatically
+#(to not abuse create() as update())
 #EXCEPTION THROWN BY: Controller
 POST http://localhost:8080/plant
 Content-Type: application/json
@@ -77,64 +75,12 @@ Content-Type: application/json
 ###
 #createPlant()
 #NEGATIVE TEST
-#SCENARIO: null plant
-#EXCEPTION THROWN BY: Controller
-POST http://localhost:8080/plant
-Content-Type: application/json
-
-{
-}
-
-###
-#createPlant()
-#NEGATIVE TEST
-#SCENARIO: plantId that is negative
-#EXCEPTION THROWN BY: Controller
-POST http://localhost:8080/plant
-Content-Type: application/json
-
-{
-  "plantId": -3,
-  "name": "Baum",
-  "latinName": "Pflanzus Magnifisus",
-  "price": 6,
-  "amount": 3,
-  "category": "BAUM",
-  "height": "S",
-  "waterDemand": "HIGH",
-  "description": "Super toller Baum echt schick",
-  "imageLink": "Nices Foto"
-}
-
-###
-#createPlant()
-#NEGATIVE TEST
 #SCENARIO: Name that is null
 #EXCEPTION THROWN BY: Controller
 POST http://localhost:8080/plant
 Content-Type: application/json
 
 {
-  "latinName": "Pflanzus Magnifisus",
-  "price": 6,
-  "amount": 3,
-  "category": "BAUM",
-  "height": "S",
-  "waterDemand": "HIGH",
-  "description": "Super toller Baum echt schick",
-  "imageLink": "Nices Foto"
-}
-
-###
-#createPlant()
-#NEGATIVE TEST
-#SCENARIO: Name that is blank
-#EXCEPTION THROWN BY: Controller
-POST http://localhost:8080/plant
-Content-Type: application/json
-
-{
-  "name": "",
   "latinName": "Pflanzus Magnifisus",
   "price": 6,
   "amount": 3,
@@ -493,7 +439,7 @@ Content-Type: application/json
 ###
 #getPlantsByCategory()
 #NEGATIVE PATH TEST
-#SCENARIO: Category does not exist at all
+#SCENARIO: Category does not defined at all
 #EXCEPTION THROWN BY: Controller
 GET http://localhost:8080/plants/category/FLEISCHFRESSENDEPFLANZE
 Content-Type: application/json
@@ -516,7 +462,7 @@ Content-Type: application/json
 #updatePlantAmount()
 #HAPPY PATH TEST
 #SCENARIO: Normal
-PUT http://localhost:8080/plant/1?newAmount=12
+PUT http://localhost:8080/plant/49?newAmount=12
 Content-Type: application/json
 
 ###
