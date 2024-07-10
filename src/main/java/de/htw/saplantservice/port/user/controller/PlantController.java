@@ -26,7 +26,7 @@ public class PlantController {
     }
 
     @PostMapping(path = "/plant")
-    @ResponseStatus(HttpStatus.OK)
+    @ResponseStatus(HttpStatus.CREATED)
     public @ResponseBody Plant createPlant(@Valid @RequestBody Plant plant){
         if (plant.getPlantId()!=null) throw new IllegalArgumentException("Plant ID is created automatically and " +
                 "should not be given.");
