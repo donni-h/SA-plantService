@@ -1,0 +1,578 @@
+#CREATEPLANT() TESTS:
+
+
+###
+#createPlant()
+#HAPPY PATH TEST
+#SCENARIO: Plant with all Properties
+POST http://localhost:8080/plant
+Content-Type: application/json
+
+{
+  "name": "Pflanze",
+  "latinName": "Pflanzus Longus",
+  "price": 1.3,
+  "amount": 5,
+  "category": "GARTENPFLANZE",
+  "height": "M",
+  "waterDemand": "LOW",
+  "description": "Super tolle Pflanze echt schick",
+  "imageLink": "Nices Foto"
+}
+
+###
+#createPlant()
+#HAPPY PATH TEST
+#SCENARIO: Another Plant with all Properties
+POST http://localhost:8080/plant
+Content-Type: application/json
+
+{
+  "name": "Baum",
+  "latinName": "Pflanzus Magnifisus",
+  "price": 6,
+  "amount": 3,
+  "category": "BAUM",
+  "height": "S",
+  "waterDemand": "HIGH",
+  "description": "Super toller Baum echt schick",
+  "imageLink": "Nices Foto"
+}
+
+###
+#createPlant()
+#NEGATIVE TEST
+#SCENARIO: null plant
+#EXCEPTION THROWN BY: Controller
+POST http://localhost:8080/plant
+Content-Type: application/json
+
+{
+}
+
+###
+#createPlant()
+#NEGATIVE PATH TEST
+#SCENARIO: with  plantId that should not be given because it is created automatically
+#(to not abuse create() as update())
+#EXCEPTION THROWN BY: Controller
+POST http://localhost:8080/plant
+Content-Type: application/json
+
+{
+  "plantId": 23,
+  "name": "Baum",
+  "latinName": "Pflanzus Cringe",
+  "price": 6,
+  "amount": 3,
+  "category": "BAUM",
+  "height": "S",
+  "waterDemand": "HIGH",
+  "description": "Super toller Baum echt schick",
+  "imageLink": "Nices Foto"
+}
+
+###
+#createPlant()
+#NEGATIVE TEST
+#SCENARIO: Name that is null
+#EXCEPTION THROWN BY: Controller
+POST http://localhost:8080/plant
+Content-Type: application/json
+
+{
+  "latinName": "Pflanzus Magnifisus",
+  "price": 6,
+  "amount": 3,
+  "category": "BAUM",
+  "height": "S",
+  "waterDemand": "HIGH",
+  "description": "Super toller Baum echt schick",
+  "imageLink": "Nices Foto"
+}
+
+###
+#createPlant()
+#NEGATIVE TEST
+#SCENARIO: Name that is blank
+#EXCEPTION THROWN BY: Controller
+POST http://localhost:8080/plant
+Content-Type: application/json
+
+{
+  "name": "",
+  "latinName": "Pflanzus Magnifisus",
+  "price": 6,
+  "amount": 3,
+  "category": "BAUM",
+  "height": "S",
+  "waterDemand": "HIGH",
+  "description": "Super toller Baum echt schick",
+  "imageLink": "Nices Foto"
+}
+
+###
+#createPlant()
+#NEGATIVE TEST
+#SCENARIO: Name that is longer than 50 char
+#EXCEPTION THROWN BY: Controller
+POST http://localhost:8080/plant
+Content-Type: application/json
+
+{
+  "name": "aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa",
+  "latinName": "Pflanzus Magnifisus",
+  "price": 6,
+  "amount": 3,
+  "category": "BAUM",
+  "height": "S",
+  "waterDemand": "HIGH",
+  "description": "Super toller Baum echt schick",
+  "imageLink": "Nices Foto"
+}
+
+###
+#createPlant()
+#NEGATIVE TEST
+#SCENARIO: Latin Name that is null
+#EXCEPTION THROWN BY: Controller
+POST http://localhost:8080/plant
+Content-Type: application/json
+
+{
+  "name": "Hallo",
+  "price": 6,
+  "amount": 3,
+  "category": "BAUM",
+  "height": "S",
+  "waterDemand": "HIGH",
+  "description": "Super toller Baum echt schick",
+  "imageLink": "Nices Foto"
+}
+
+###
+#createPlant()
+#NEGATIVE TEST
+#SCENARIO: Latin Name that is blank
+#EXCEPTION THROWN BY: Controller
+POST http://localhost:8080/plant
+Content-Type: application/json
+
+{
+  "name": "Pflanze",
+  "latinName": "",
+  "price": 1.3,
+  "amount": 5,
+  "category": "GARTENPFLANZE",
+  "height": "M",
+  "waterDemand": "LOW",
+  "description": "Super tolle Pflanze echt schick",
+  "imageLink": "Nices Foto"
+}
+
+###
+#createPlant()
+#NEGATIVE TEST
+#SCENARIO: Latin Name that is longer than 50 char
+#EXCEPTION THROWN BY: Controller
+POST http://localhost:8080/plant
+Content-Type: application/json
+
+{
+  "name": "Pflanze",
+  "latinName": "aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa",
+  "price": 1.3,
+  "amount": 5,
+  "category": "GARTENPFLANZE",
+  "height": "M",
+  "waterDemand": "LOW",
+  "description": "Super tolle Pflanze echt schick",
+  "imageLink": "Nices Foto"
+}
+
+###
+#createPlant()
+#NEGATIVE TEST
+#SCENARIO: Price that is null
+#EXCEPTION THROWN BY: Controller
+POST http://localhost:8080/plant
+Content-Type: application/json
+
+{
+  "name": "Pflanze",
+  "latinName": "Pflanzus Longus",
+  "amount": 5,
+  "category": "GARTENPFLANZE",
+  "height": "M",
+  "waterDemand": "LOW",
+  "description": "Super tolle Pflanze echt schick",
+  "imageLink": "Nices Foto"
+}
+
+###
+#createPlant()
+#NEGATIVE TEST
+#SCENARIO: Price that is negative
+#EXCEPTION THROWN BY: Controller
+POST http://localhost:8080/plant
+Content-Type: application/json
+
+{
+  "name": "Pflanze",
+  "latinName": "Pflanzus Longus",
+  "price": -1.3,
+  "amount": 5,
+  "category": "GARTENPFLANZE",
+  "height": "M",
+  "waterDemand": "LOW",
+  "description": "Super tolle Pflanze echt schick",
+  "imageLink": "Nices Foto"
+}
+
+###
+#createPlant()
+#NEGATIVE TEST
+#SCENARIO: Amount that is null
+#EXCEPTION THROWN BY: Controller
+POST http://localhost:8080/plant
+Content-Type: application/json
+
+{
+  "name": "Pflanze",
+  "latinName": "Pflanzus Longus",
+  "price": 1.3,
+  "category": "GARTENPFLANZE",
+  "height": "M",
+  "waterDemand": "LOW",
+  "description": "Super tolle Pflanze echt schick",
+  "imageLink": "Nices Foto"
+}
+
+###
+#createPlant()
+#NEGATIVE TEST
+#SCENARIO: Amount that is negative
+#EXCEPTION THROWN BY: Controller
+POST http://localhost:8080/plant
+Content-Type: application/json
+
+{
+  "name": "Pflanze",
+  "latinName": "Pflanzus Longus",
+  "price": 1.3,
+  "amount": -5,
+  "category": "GARTENPFLANZE",
+  "height": "M",
+  "waterDemand": "LOW",
+  "description": "Super tolle Pflanze echt schick",
+  "imageLink": "Nices Foto"
+}
+
+###
+#createPlant()
+#NEGATIVE TEST
+#SCENARIO: Category that does not exist
+#EXCEPTION THROWN BY: Controller
+POST http://localhost:8080/plant
+Content-Type: application/json
+
+{
+  "name": "Pflanze",
+  "latinName": "Pflanzus Longus",
+  "price": 1.3,
+  "amount": 5,
+  "category": "LAUCH",
+  "height": "M",
+  "waterDemand": "LOW",
+  "description": "Super tolle Pflanze echt schick",
+  "imageLink": "Nices Foto"
+}
+
+###
+#createPlant()
+#NEGATIVE TEST
+#SCENARIO: Height that does not exist
+#EXCEPTION THROWN BY: Controller
+POST http://localhost:8080/plant
+Content-Type: application/json
+
+{
+  "name": "Pflanze",
+  "latinName": "Pflanzus Longus",
+  "price": 1.3,
+  "amount": 5,
+  "category": "BAUM",
+  "height": "XL",
+  "waterDemand": "LOW",
+  "description": "Super tolle Pflanze echt schick",
+  "imageLink": "Nices Foto"
+}
+
+###
+#createPlant()
+#NEGATIVE TEST
+#SCENARIO: Waterdemand that does not exist
+#EXCEPTION THROWN BY: Controller
+POST http://localhost:8080/plant
+Content-Type: application/json
+
+{
+  "name": "Pflanze",
+  "latinName": "Pflanzus Longus",
+  "price": 1.3,
+  "amount": 5,
+  "category": "BAUM",
+  "height": "L",
+  "waterDemand": "SUPER HIGH",
+  "description": "Super tolle Pflanze echt schick",
+  "imageLink": "Nices Foto"
+}
+
+
+###
+#GETPLANTBYID() TESTS:
+
+
+###
+#getPlantById()
+#HAPPY PATH TEST
+#SCENARIO: normal
+GET http://localhost:8080/plant/5
+Content-Type: application/json
+
+###
+#NULL IS NOT POSSIBLE TO PROVIDE IN URL
+
+###
+#getPlantById()
+#NEGATIVE PATH TEST
+#SCENARIO: id that is 0
+#EXCEPTION THROWN BY: Controller
+GET http://localhost:8080/plant/0
+Content-Type: application/json
+
+###
+#getPlantById()
+#NEGATIVE PATH TEST
+#SCENARIO: id that is negaitve
+#EXCEPTION THROWN BY: Controller
+GET http://localhost:8080/plant/-1
+Content-Type: application/json
+
+###
+#getPlantById()
+#NEGATIVE PATH TEST
+#SCENARIO: id that is String
+#EXCEPTION THROWN BY: Controller
+GET http://localhost:8080/plant/dieseidisteinString
+Content-Type: application/json
+
+###
+#getPlantById()
+#NEGATIVE PATH TEST
+#SCENARIO: id that does not exist
+#EXCEPTION THROWN BY: Service
+GET http://localhost:8080/plant/41723741
+Content-Type: application/json
+
+
+###
+#GETALLPLANTS() TESTS:
+
+
+###
+#getAllPlants()
+#HAPPY PATH TEST
+#SCENARIO: normal
+GET http://localhost:8080/plants
+Content-Type: application/json
+
+
+###
+#GETPLANTSBYNAME() TESTS:
+
+
+###
+#getPlantsByName()
+#HAPPY PATH TEST
+#SCENARIO: Plants with name that exists
+GET http://localhost:8080/plants/name/Pflanze
+Content-Type: application/json
+
+###
+#getPlantsByName()
+#HAPPY PATH TEST
+#SCENARIO: Plants with name that does not exist
+GET http://localhost:8080/plants/name/Spongebob
+Content-Type: application/json
+
+###
+#getPlantsByName()
+#NEGATIVE PATH TEST
+#SCENARIO: Integer instead of String for Name
+#EXCEPTION NOT THROWN; NUMBER IS ENTERPRETED AS STRING
+GET http://localhost:8080/plants/name/1
+Content-Type: application/json
+
+###
+#NULL AND BLANK ARE NOT POSSIBLE TO PROVIDE IN URL
+
+
+###
+#GETPLANTSBYCATEGORY() TESTS:
+
+
+###
+#getPlantsByCategory()
+#HAPPY PATH TEST
+#SCENARIO: Plants with Category exist in Database
+GET http://localhost:8080/plants/category/GARTENPFLANZE
+Content-Type: application/json
+
+###
+#getPlantsByCategory()
+#HAPPY PATH TEST
+#SCENARIO: Plants with Category do not exist in Database
+GET http://localhost:8080/plants/category/HECKENPFLANZE
+Content-Type: application/json
+
+###
+#getPlantsByCategory()
+#NEGATIVE PATH TEST
+#SCENARIO: Category does not defined at all
+#EXCEPTION THROWN BY: Controller
+GET http://localhost:8080/plants/category/FLEISCHFRESSENDEPFLANZE
+Content-Type: application/json
+
+###
+#getPlantsByCategory()
+#NEGATIVE PATH TEST
+#SCENARIO: Integer instead of String
+#EXCEPTION THROWN BY: Controller
+# -> Interpretes Int like String, Same exception as above because because no Category has Int Name
+GET http://localhost:8080/plants/category/11423
+Content-Type: application/json
+
+
+###
+#UPDATEPLANTAMOUNT() TESTS:
+
+
+###
+#updatePlantAmount()
+#HAPPY PATH TEST
+#SCENARIO: Normal
+PUT http://localhost:8080/plant/49?newAmount=12
+Content-Type: application/json
+
+###
+#updatePlantAmount()
+#NEGATIVE PATH TEST
+#SCENARIO: Plant does not exist
+#EXCEPTION THROWN BY: Service
+PUT http://localhost:8080/plant/1244?newAmount=12
+Content-Type: application/json
+
+###
+#updatePlantAmount()
+#NEGATIVE PATH TEST
+#SCENARIO: Negative id
+#EXCEPTION THROWN BY: Controller
+PUT http://localhost:8080/plant/-1?newAmount=12
+Content-Type: application/json
+
+###
+#updatePlantAmount()
+#NEGATIVE PATH TEST
+#SCENARIO: 0 id
+#EXCEPTION THROWN BY: Controller
+PUT http://localhost:8080/plant/0?newAmount=12
+Content-Type: application/json
+
+###
+#updatePlantAmount()
+#NEGATIVE PATH TEST
+#SCENARIO: non-integer id
+#EXCEPTION THROWN BY: Controller
+PUT http://localhost:8080/plant/daawd?newAmount=12
+Content-Type: application/json
+
+###
+#updatePlantAmount()
+#NEGATIVE PATH TEST
+#SCENARIO: no amount
+#EXCEPTION THROWN BY: Controller
+PUT http://localhost:8080/plant/1
+Content-Type: application/json
+
+###
+#updatePlantAmount()
+#NEGATIVE PATH TEST
+#SCENARIO: negative amount
+#EXCEPTION THROWN BY: Controller
+PUT http://localhost:8080/plant/1?newAmount=-1
+Content-Type: application/json
+
+###
+#updatePlantAmount()
+#NEGATIVE PATH TEST
+#SCENARIO: amount that is not integer
+#EXCEPTION THROWN BY: Controller
+PUT http://localhost:8080/plant/1?newAmount=dawd
+Content-Type: application/json
+
+
+###
+#DELETEPLANT() TESTS:
+
+
+###
+#deletePlant()
+#HAPPY PATH TEST
+#SCENARIO: Delete Plant that exists
+DELETE http://localhost:8080/plant/1
+Content-Type: application/json
+
+###
+#deletePlant()
+#NEGATIVE TEST
+#SCENARIO: Plant does not exist
+#EXCEPTION THROWN BY: Service
+DELETE http://localhost:8080/plant/342234
+Content-Type: application/json
+
+###
+#deletePlant()
+#NEGATIVE TEST
+#SCENARIO: plant id that is 0
+#EXCEPTION THROWN BY: Controller
+DELETE http://localhost:8080/plant/0
+Content-Type: application/json
+
+###
+#deletePlant()
+#NEGATIVE TEST
+#SCENARIO: plant id that is negative
+#EXCEPTION THROWN BY: Controller
+DELETE http://localhost:8080/plant/-1
+Content-Type: application/json
+
+###
+#deletePlant()
+#NEGATIVE TEST
+#SCENARIO: plant id that is not integer
+#EXCEPTION THROWN BY: Controller
+DELETE http://localhost:8080/plant/daw
+Content-Type: application/json
+
+
+###
+#DELETEALLPLANTS() TESTS:
+
+
+###
+#deleteAllPlants()
+#HAPPY PATH TEST
+#SCENARIO: Delete All Plants
+DELETE http://localhost:8080/plants
+Content-Type: application/json
