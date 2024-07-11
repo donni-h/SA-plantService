@@ -1,4 +1,4 @@
-FROM maven:3.9.7-eclipse-temurin-21 as builder
+FROM maven:3.9.7-eclipse-temurin-21 AS builder
 WORKDIR /app
 COPY pom.xml /app/pom.xml
 RUN mvn dependency:go-offline
@@ -13,7 +13,6 @@ RUN jar -xf ../*.jar
 
 FROM eclipse-temurin:21
 
-EXPOSE 8080
 VOLUME /tmp
 ARG DEPENDENCY=/app/target/dependency
 COPY --from=prepare-production ${DEPENDENCY}/BOOT-INF/lib /app/lib
