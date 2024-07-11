@@ -4,7 +4,7 @@
 ###
 #createPlant()
 #HAPPY PATH TEST
-#SCENARIO: without given plantId
+#SCENARIO: Plant with all Properties
 POST http://localhost:8080/plant
 Content-Type: application/json
 
@@ -23,52 +23,11 @@ Content-Type: application/json
 ###
 #createPlant()
 #HAPPY PATH TEST
-#SCENARIO: without given plantId
+#SCENARIO: Another Plant with all Properties
 POST http://localhost:8080/plant
 Content-Type: application/json
 
 {
-  "name": "Baum",
-  "latinName": "Pflanzus Magnifisus",
-  "price": 6,
-  "amount": 3,
-  "category": "BAUM",
-  "height": "S",
-  "waterDemand": "HIGH",
-  "description": "Super toller Baum echt schick",
-  "imageLink": "Nices Foto"
-}
-
-###
-#createPlant()
-#HAPPY PATH TEST
-#SCENARIO: with given plantId
-POST http://localhost:8080/plant
-Content-Type: application/json
-
-{
-  "plantId": 3,
-  "name": "Baum",
-  "latinName": "Pflanzus Magnifisus",
-  "price": 6,
-  "amount": 3,
-  "category": "BAUM",
-  "height": "S",
-  "waterDemand": "HIGH",
-  "description": "Super toller Baum echt schick",
-  "imageLink": "Nices Foto"
-}
-
-###
-#createPlant()
-#NEGATIVE TEST
-#SCENARIO: plantId that is already taken
-#EXCEPTION THROWN BY: Service
-POST http://localhost:8080/plant
-Content-Type: application/json
-
-{
-  "plantId": 1,
   "name": "Baum",
   "latinName": "Pflanzus Magnifisus",
   "price": 6,
@@ -93,16 +52,17 @@ Content-Type: application/json
 
 ###
 #createPlant()
-#NEGATIVE TEST
-#SCENARIO: plantId that is negative
+#NEGATIVE PATH TEST
+#SCENARIO: with  plantId that should not be given because it is created automatically
+#(to not abuse create() as update())
 #EXCEPTION THROWN BY: Controller
 POST http://localhost:8080/plant
 Content-Type: application/json
 
 {
-  "plantId": -3,
+  "plantId": 23,
   "name": "Baum",
-  "latinName": "Pflanzus Magnifisus",
+  "latinName": "Pflanzus Cringe",
   "price": 6,
   "amount": 3,
   "category": "BAUM",
@@ -121,26 +81,6 @@ POST http://localhost:8080/plant
 Content-Type: application/json
 
 {
-  "latinName": "Pflanzus Magnifisus",
-  "price": 6,
-  "amount": 3,
-  "category": "BAUM",
-  "height": "S",
-  "waterDemand": "HIGH",
-  "description": "Super toller Baum echt schick",
-  "imageLink": "Nices Foto"
-}
-
-###
-#createPlant()
-#NEGATIVE TEST
-#SCENARIO: Name that is blank
-#EXCEPTION THROWN BY: Controller
-POST http://localhost:8080/plant
-Content-Type: application/json
-
-{
-  "name": "",
   "latinName": "Pflanzus Magnifisus",
   "price": 6,
   "amount": 3,
@@ -397,7 +337,7 @@ Content-Type: application/json
 #getPlantById()
 #HAPPY PATH TEST
 #SCENARIO: normal
-GET http://localhost:8080/plant/1
+GET http://localhost:8080/plant/5
 Content-Type: application/json
 
 ###
@@ -499,7 +439,7 @@ Content-Type: application/json
 ###
 #getPlantsByCategory()
 #NEGATIVE PATH TEST
-#SCENARIO: Category does not exist at all
+#SCENARIO: Category does not defined at all
 #EXCEPTION THROWN BY: Controller
 GET http://localhost:8080/plants/category/FLEISCHFRESSENDEPFLANZE
 Content-Type: application/json
@@ -508,7 +448,8 @@ Content-Type: application/json
 #getPlantsByCategory()
 #NEGATIVE PATH TEST
 #SCENARIO: Integer instead of String
-#EXCEPTION THROWN BY: Controller -> Interpretes Int like String, Same exception as above
+#EXCEPTION THROWN BY: Controller
+# -> Interpretes Int like String, Same exception as above because because no Category has Int Name
 GET http://localhost:8080/plants/category/11423
 Content-Type: application/json
 
@@ -521,7 +462,7 @@ Content-Type: application/json
 #updatePlantAmount()
 #HAPPY PATH TEST
 #SCENARIO: Normal
-PUT http://localhost:8080/plant/1?newAmount=12
+PUT http://localhost:8080/plant/49?newAmount=12
 Content-Type: application/json
 
 ###
@@ -622,4 +563,16 @@ Content-Type: application/json
 #SCENARIO: plant id that is not integer
 #EXCEPTION THROWN BY: Controller
 DELETE http://localhost:8080/plant/daw
+Content-Type: application/json
+
+
+###
+#DELETEALLPLANTS() TESTS:
+
+
+###
+#deleteAllPlants()
+#HAPPY PATH TEST
+#SCENARIO: Delete All Plants
+DELETE http://localhost:8080/plants
 Content-Type: application/json

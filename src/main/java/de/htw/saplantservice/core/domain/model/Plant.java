@@ -24,7 +24,6 @@ public class Plant {
             strategy = GenerationType.SEQUENCE,
             generator = "plant_sequence"
     )
-    @Positive(message = "plantId must be positive")
     private Long plantId;
 
     @NotNull(message = "name cannot be null")
@@ -43,30 +42,49 @@ public class Plant {
     @PositiveOrZero (message = "amount hast to be positive")
     private Integer amount;
 
+    @NotNull (message = "Category cannot be null")
     @Enumerated(EnumType.STRING)
     private Category category;
 
+    @NotNull (message = "Height cannot be null")
     @Enumerated(EnumType.STRING)
     private Height height;
 
+    @NotNull (message = "Waterdemand cannot be null")
     @Enumerated(EnumType.STRING)
     private WaterDemand waterDemand;
 
+    @NotNull (message = "Description cannot be null")
     private String description;
 
+    @NotNull (message = "Image link cannot be null")
     private String imageLink;
 
-    public Plant(String name, String latinName, String description, float price, Category category, Height height,
-                 WaterDemand waterDemand, String imageLink, int amount) {
+    public Plant(Long plantId, String name, String latinName, Float price, Integer amount, Category category,
+                 Height height, WaterDemand waterDemand, String description, String imageLink) {
+        this.plantId = plantId;
         this.name = name;
         this.latinName = latinName;
-        this.description = description;
         this.price = price;
+        this.amount = amount;
         this.category = category;
         this.height = height;
         this.waterDemand = waterDemand;
+        this.description = description;
         this.imageLink = imageLink;
+    }
+
+    public Plant(String name, String latinName, Float price, Integer amount, Category category, Height height,
+                 WaterDemand waterDemand, String description, String imageLink) {
+        this.name = name;
+        this.latinName = latinName;
+        this.price = price;
         this.amount = amount;
+        this.category = category;
+        this.height = height;
+        this.waterDemand = waterDemand;
+        this.description = description;
+        this.imageLink = imageLink;
     }
 
     @Override
@@ -83,5 +101,21 @@ public class Plant {
                 ", imageLink='" + imageLink + '\'' +
                 ", amount=" + amount +
                 '}';
+    }
+
+    @Override
+    public boolean equals(Object o){
+        if (this == o) return true;
+        if (o == null || this.getClass() != o.getClass()) return false;
+        Plant plant = (Plant) o;
+        return this.getName().equals(plant.getName())
+                && this.getLatinName().equals(plant.getLatinName())
+                && this.getPrice().equals(plant.getPrice())
+                && this.getAmount().equals(plant.getAmount())
+                && this.getCategory().equals(plant.getCategory())
+                && this.getHeight().equals(plant.getHeight())
+                && this.getWaterDemand().equals(plant.getWaterDemand())
+                && this.getDescription().equals(plant.getDescription())
+                && this.getImageLink().equals(plant.getImageLink());
     }
 }

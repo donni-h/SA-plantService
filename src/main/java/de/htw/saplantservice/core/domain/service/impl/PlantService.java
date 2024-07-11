@@ -4,7 +4,6 @@ import de.htw.saplantservice.core.domain.model.Category;
 import de.htw.saplantservice.core.domain.model.Plant;
 import de.htw.saplantservice.core.domain.service.interfaces.IPlantRepository;
 import de.htw.saplantservice.core.domain.service.interfaces.IPlantService;
-import de.htw.saplantservice.port.user.exception.PlantIdAlreadyExistsException;
 import de.htw.saplantservice.port.user.exception.PlantIdNotFoundException;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -22,12 +21,8 @@ public class PlantService implements IPlantService {
     }
 
     @Override
-    public void createPlant(Plant plant) throws PlantIdAlreadyExistsException{
-        Long plantId = plant.getPlantId();
-        if (plantId != null){
-            if (plantRepository.findById(plantId).isPresent()) throw new PlantIdAlreadyExistsException(plantId);
-        }
-        plantRepository.save(plant);
+    public Plant createPlant(Plant plant){
+        return plantRepository.save(plant);
     }
 
     @Override
@@ -56,15 +51,21 @@ public class PlantService implements IPlantService {
 
     @Transactional
     @Override
-    public void updatePlantAmount(Long plantId, Integer newAmount) throws PlantIdNotFoundException{
+    public Plant updatePlantAmount(Long plantId, Integer newAmount) throws PlantIdNotFoundException{
         Plant existingPlant = plantRepository.findById(plantId)
                 .orElseThrow(() -> new PlantIdNotFoundException(plantId));
         existingPlant.setAmount(newAmount);
+        return existingPlant;
     }
 
     @Override
     public void deletePlant(Long plantId) throws PlantIdNotFoundException{
         if(!plantRepository.existsById(plantId)) throw new PlantIdNotFoundException(plantId);
         plantRepository.deleteById(plantId);
+    }
+
+    @Override
+    public void deleteAllPlants(){
+        plantRepository.deleteAll();
     }
 }

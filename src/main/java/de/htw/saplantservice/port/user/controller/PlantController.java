@@ -1,9 +1,8 @@
-package de.htw.saplantservice.port.controller;
+package de.htw.saplantservice.port.user.controller;
 
 import de.htw.saplantservice.core.domain.model.Category;
 import de.htw.saplantservice.core.domain.model.Plant;
 import de.htw.saplantservice.core.domain.service.interfaces.IPlantService;
-import de.htw.saplantservice.port.user.exception.PlantIdAlreadyExistsException;
 import de.htw.saplantservice.port.user.exception.PlantIdNotFoundException;
 import jakarta.validation.Valid;
 import jakarta.validation.constraints.NotBlank;
@@ -27,9 +26,11 @@ public class PlantController {
     }
 
     @PostMapping(path = "/plant")
-    @ResponseStatus(HttpStatus.OK)
-    public void createPlant(@Valid @RequestBody Plant plant) throws PlantIdAlreadyExistsException {
-        plantService.createPlant(plant);
+    @ResponseStatus(HttpStatus.CREATED)
+    public @ResponseBody Plant createPlant(@Valid @RequestBody Plant plant){
+        if (plant.getPlantId()!=null) throw new IllegalArgumentException("Plant ID is created automatically and " +
+                "should not be given.");
+        return plantService.createPlant(plant);
     }
 
     @GetMapping(path = "/plant/{plantId}")
@@ -69,7 +70,7 @@ public class PlantController {
 
     @PutMapping(path = "/plant/{plantId}")
     @ResponseStatus(HttpStatus.OK)
-    public void updatePlantAmount(
+    public @ResponseBody Plant updatePlantAmount(
             @PathVariable("plantId")
             @Positive(message = "PlantId must be positive")
             @NotNull(message = "PlantId cannot be null")
@@ -78,7 +79,7 @@ public class PlantController {
             @PositiveOrZero(message = "newAmount must be positive or zero")
             @NotNull(message = "newAmount cannot be null")
             Integer newAmount) throws PlantIdNotFoundException{
-        plantService.updatePlantAmount(plantId, newAmount);
+        return plantService.updatePlantAmount(plantId, newAmount);
     }
 
     @DeleteMapping(path = "/plant/{plantId}")
@@ -89,5 +90,11 @@ public class PlantController {
             @NotNull(message = "PlantId cannot be null")
             Long plantId) throws PlantIdNotFoundException{
         plantService.deletePlant(plantId);
+    }
+
+    @DeleteMapping(path = "/plants")
+    @ResponseStatus(HttpStatus.OK)
+    public void deleteAllPlants(){
+        plantService.deleteAllPlants();
     }
 }
