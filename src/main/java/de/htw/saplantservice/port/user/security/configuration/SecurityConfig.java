@@ -1,4 +1,4 @@
-package de.htw.saplantservice.port.user.configuration;
+package de.htw.saplantservice.port.user.security.configuration;
 
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
