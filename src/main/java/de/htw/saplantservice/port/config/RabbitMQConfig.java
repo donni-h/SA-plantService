@@ -15,28 +15,9 @@ public class RabbitMQConfig {
     @Value("${rabbitmq.queue.name}")
     private String queue;
 
-    @Value("${rabbitmq.exchange.name}")
-    private String exchange;
-
-    @Value("${rabbitmq.routingKey.name}")
-    private String routingKey;
-
     @Bean
-    public Queue hello() {
+    public Queue myQueue() {
         return new Queue(queue);
-    }
-
-    @Bean
-    public TopicExchange exchange() {
-        return new TopicExchange(exchange);
-    }
-
-    @Bean
-    public Binding binding(){
-        return BindingBuilder
-                .bind(hello())
-                .to(exchange())
-                .with(routingKey);
     }
 
     @Bean
