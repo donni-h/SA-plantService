@@ -1,6 +1,6 @@
-package de.htw.saplantservice.port.user.security.configuration;
+package de.htw.saplantservice.port.config;
 
-import de.htw.saplantservice.port.user.security.KeycloakJwtAuthenticationConverter;
+import de.htw.saplantservice.port.security.KeycloakJwtAuthenticationConverter;
 import lombok.RequiredArgsConstructor;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
