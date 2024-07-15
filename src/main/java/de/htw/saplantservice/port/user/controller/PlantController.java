@@ -15,6 +15,7 @@ import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
+import java.util.UUID;
 
 @RestController
 @Validated
@@ -37,9 +38,8 @@ public class PlantController {
     @ResponseStatus(HttpStatus.OK)
     public @ResponseBody Plant getPlantById(
             @PathVariable("plantId")
-            @Positive(message = "PlantId must be positive")
             @NotNull(message = "PlantId cannot be null")
-            Long plantId) throws PlantIdNotFoundException {
+            UUID plantId) throws PlantIdNotFoundException {
         return plantService.getPlantById(plantId);
     }
 
@@ -72,9 +72,8 @@ public class PlantController {
     @ResponseStatus(HttpStatus.OK)
     public @ResponseBody Plant updatePlantAmount(
             @PathVariable("plantId")
-            @Positive(message = "PlantId must be positive")
             @NotNull(message = "PlantId cannot be null")
-            Long plantId,
+            UUID plantId,
             @RequestParam(required = true)
             @PositiveOrZero(message = "newAmount must be positive or zero")
             @NotNull(message = "newAmount cannot be null")
@@ -86,9 +85,8 @@ public class PlantController {
     @ResponseStatus(HttpStatus.OK)
     public void deletePlant(
             @PathVariable("plantId")
-            @Positive(message = "PlantId must be positive")
             @NotNull(message = "PlantId cannot be null")
-            Long plantId) throws PlantIdNotFoundException{
+            UUID plantId) throws PlantIdNotFoundException{
         plantService.deletePlant(plantId);
     }
 

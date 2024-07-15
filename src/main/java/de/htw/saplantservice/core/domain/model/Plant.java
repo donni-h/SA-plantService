@@ -6,6 +6,8 @@ import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
 
+import java.util.UUID;
+
 
 @Entity //Marks class as database Entity
 @Table  //Table in Data Base (here you can name the table)
@@ -14,17 +16,8 @@ import lombok.Setter;
 @NoArgsConstructor
 public class Plant {
     @Id
-    @SequenceGenerator(
-            name = "plant_sequence",
-            sequenceName = "plant_sequence",
-            allocationSize = 1
-
-    )
-    @GeneratedValue(
-            strategy = GenerationType.SEQUENCE,
-            generator = "plant_sequence"
-    )
-    private Long plantId;
+    @GeneratedValue(strategy = GenerationType.UUID)
+    private UUID plantId;
 
     @NotNull(message = "name cannot be null")
     @Size(min = 1, max = 50, message = "Name must be between 1 and 50 characters")
@@ -60,7 +53,7 @@ public class Plant {
     @NotNull (message = "Image link cannot be null")
     private String imageLink;
 
-    public Plant(Long plantId, String name, String latinName, Float price, Integer amount, Category category,
+    public Plant(UUID plantId, String name, String latinName, Float price, Integer amount, Category category,
                  Height height, WaterDemand waterDemand, String description, String imageLink) {
         this.plantId = plantId;
         this.name = name;
