@@ -15,7 +15,7 @@ public interface IPlantService {
     List<Plant> getPlantsByName(String plantName);
     List<Plant> getPlantsByCategory(Category plantCategory);
     Plant updatePlantAmount(UUID plantId, Integer newAmount) throws PlantIdNotFoundException;
-
+    Plant updatePlantAmountWithDifference(UUID plantId, Integer difference) throws PlantIdNotFoundException;
     void deletePlant(UUID plantId) throws PlantIdNotFoundException;
     void deleteAllPlants();
 }
