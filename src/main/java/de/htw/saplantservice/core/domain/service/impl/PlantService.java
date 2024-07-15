@@ -59,6 +59,14 @@ public class PlantService implements IPlantService {
         return existingPlant;
     }
 
+    @Transactional
+    @Override
+    public Plant updatePlantAmountWithDifference(UUID plantId, Integer difference) throws PlantIdNotFoundException {
+        Plant existingPlant = getPlantById(plantId);
+        existingPlant.setAmount(existingPlant.getAmount()+difference);
+        return existingPlant;
+    }
+
     @Override
     public void deletePlant(UUID plantId) throws PlantIdNotFoundException{
         if(!plantRepository.existsById(plantId)) throw new PlantIdNotFoundException(plantId);

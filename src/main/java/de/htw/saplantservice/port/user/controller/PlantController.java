@@ -68,7 +68,7 @@ public class PlantController {
         return plantService.getPlantsByCategory(plantCategory);
     }
 
-    @PutMapping(path = "/plant/{plantId}")
+    @PutMapping(path = "/plant/amount/{plantId}")
     @ResponseStatus(HttpStatus.OK)
     public @ResponseBody Plant updatePlantAmount(
             @PathVariable("plantId")
@@ -79,6 +79,18 @@ public class PlantController {
             @NotNull(message = "newAmount cannot be null")
             Integer newAmount) throws PlantIdNotFoundException{
         return plantService.updatePlantAmount(plantId, newAmount);
+    }
+
+    @PutMapping(path = "/plant/amountdiff/{plantId}")
+    @ResponseStatus(HttpStatus.OK)
+    public @ResponseBody Plant updatePlantAmountWithDifference(
+            @PathVariable("plantId")
+            @NotNull(message = "PlantId cannot be null")
+            UUID plantId,
+            @RequestParam(required = true)
+            @NotNull(message = "difference cannot be null")
+            Integer difference) throws PlantIdNotFoundException{
+        return plantService.updatePlantAmountWithDifference(plantId, difference);
     }
 
     @DeleteMapping(path = "/plant/{plantId}")
