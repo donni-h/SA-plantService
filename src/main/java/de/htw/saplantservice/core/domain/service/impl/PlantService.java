@@ -10,6 +10,7 @@ import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
 import java.util.List;
+import java.util.UUID;
 
 @Service
 public class PlantService implements IPlantService {
@@ -26,7 +27,7 @@ public class PlantService implements IPlantService {
     }
 
     @Override
-    public Plant getPlantById(Long plantId) throws PlantIdNotFoundException {
+    public Plant getPlantById(UUID plantId) throws PlantIdNotFoundException {
         return plantRepository.findById(plantId)
                 .orElseThrow(() -> new PlantIdNotFoundException(plantId));
     }
@@ -51,7 +52,7 @@ public class PlantService implements IPlantService {
 
     @Transactional
     @Override
-    public Plant updatePlantAmount(Long plantId, Integer newAmount) throws PlantIdNotFoundException{
+    public Plant updatePlantAmount(UUID plantId, Integer newAmount) throws PlantIdNotFoundException{
         Plant existingPlant = plantRepository.findById(plantId)
                 .orElseThrow(() -> new PlantIdNotFoundException(plantId));
         existingPlant.setAmount(newAmount);
@@ -59,7 +60,7 @@ public class PlantService implements IPlantService {
     }
 
     @Override
-    public void deletePlant(Long plantId) throws PlantIdNotFoundException{
+    public void deletePlant(UUID plantId) throws PlantIdNotFoundException{
         if(!plantRepository.existsById(plantId)) throw new PlantIdNotFoundException(plantId);
         plantRepository.deleteById(plantId);
     }

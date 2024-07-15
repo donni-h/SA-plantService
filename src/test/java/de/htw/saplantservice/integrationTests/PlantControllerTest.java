@@ -21,6 +21,7 @@ import org.testcontainers.junit.jupiter.Testcontainers;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
+import java.util.UUID;
 
 import static junit.framework.TestCase.assertEquals;
 import static junit.framework.TestCase.assertTrue;
@@ -150,7 +151,7 @@ public class PlantControllerTest {
     @Test
     @Rollback
     void createPlantTest_GivenPlantID(){ //ID should not be given
-        Plant plant = new Plant(3L, "Pflanzus Longus", "Pflanzisimus Longimus", 5.40f,
+        Plant plant = new Plant(UUID.randomUUID(), "Pflanzus Longus", "Pflanzisimus Longimus", 5.40f,
                 15, Category.ZIMMERPFLANZE, Height.L, WaterDemand.MEDIUM, "coole Pflanze",
                 "cooles Bild");
 
@@ -476,7 +477,7 @@ public class PlantControllerTest {
                 new ParameterizedTypeReference<List<Plant>>() {});
         List<Plant> plants = getAllResponse.getBody();
         Plant randomplant = plants.get(0);
-        Long randomPlantId = randomplant.getPlantId();
+        UUID randomPlantId = randomplant.getPlantId();
 
         //getPlantById()
         ResponseEntity<Plant> response = restTemplate.exchange("/plant/" + randomPlantId.toString(), HttpMethod.GET,
@@ -641,7 +642,7 @@ public class PlantControllerTest {
                 new ParameterizedTypeReference<List<Plant>>() {});
         List<Plant> plants = getAllResponse.getBody();
         Plant randomplant = plants.get(0);
-        Long randomPlantId = randomplant.getPlantId();
+        UUID randomPlantId = randomplant.getPlantId();
 
         //updatePlantById()
         Integer newAmount = 12;
@@ -696,7 +697,7 @@ public class PlantControllerTest {
                 new ParameterizedTypeReference<List<Plant>>() {});
         List<Plant> plants = getAllResponse.getBody();
         Plant randomplant = plants.get(0);
-        Long randomPlantId = randomplant.getPlantId();
+        UUID randomPlantId = randomplant.getPlantId();
 
         //updatePlantAmount()
         ResponseEntity<String> response = restTemplate.exchange("/plant/" + randomPlantId +"?newAmount=",
@@ -712,7 +713,7 @@ public class PlantControllerTest {
                 new ParameterizedTypeReference<List<Plant>>() {});
         List<Plant> plants = getAllResponse.getBody();
         Plant randomplant = plants.get(0);
-        Long randomPlantId = randomplant.getPlantId();
+        UUID randomPlantId = randomplant.getPlantId();
 
         //updatePlantAmount()
         ResponseEntity<String> response = restTemplate.exchange("/plant/" + randomPlantId +"?newAmount=-1",
@@ -728,7 +729,7 @@ public class PlantControllerTest {
                 new ParameterizedTypeReference<List<Plant>>() {});
         List<Plant> plants = getAllResponse.getBody();
         Plant randomplant = plants.get(0);
-        Long randomPlantId = randomplant.getPlantId();
+        UUID randomPlantId = randomplant.getPlantId();
 
         //updatePlantAmount()
         ResponseEntity<String> response = restTemplate.exchange("/plant/" + randomPlantId +"?newAmount=adwd",
@@ -748,7 +749,7 @@ public class PlantControllerTest {
                 new ParameterizedTypeReference<List<Plant>>() {});
         List<Plant> plants = getAllResponse.getBody();
         Plant randomplant = plants.get(0);
-        Long randomPlantId = randomplant.getPlantId();
+        UUID randomPlantId = randomplant.getPlantId();
 
         //execute deletePlant()
         ResponseEntity<Void> deleteResponse = restTemplate.exchange("/plant/" + randomPlantId, HttpMethod.DELETE,
