@@ -1,4 +1,4 @@
-package de.htw.saplantservice.port.user.security;
+package de.htw.saplantservice.port.security;
 
 import org.springframework.core.convert.converter.Converter;
 import org.springframework.lang.NonNull;
