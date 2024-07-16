@@ -48,9 +48,11 @@ public class Plant {
     private WaterDemand waterDemand;
 
     @NotNull (message = "Description cannot be null")
+    @Column(length = 1500)
     private String description;
 
     @NotNull (message = "Image link cannot be null")
+    @Column(length = 1500)
     private String imageLink;
 
     public Plant(UUID plantId, String name, String latinName, Float price, Integer amount, Category category,
