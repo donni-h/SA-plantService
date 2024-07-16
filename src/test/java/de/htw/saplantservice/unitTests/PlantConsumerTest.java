@@ -1,3 +1,5 @@
+package de.htw.saplantservice.unitTests;
+
 import de.htw.saplantservice.core.domain.service.interfaces.IPlantService;
 import de.htw.saplantservice.port.dto.PlantChangeDto;
 import de.htw.saplantservice.port.user.consumer.PlantConsumer;
