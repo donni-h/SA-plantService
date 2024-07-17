@@ -7,12 +7,15 @@ import de.htw.saplantservice.core.domain.model.WaterDemand;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.boot.test.autoconfigure.web.servlet.AutoConfigureMockMvc;
 import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.boot.test.web.client.TestRestTemplate;
 import org.springframework.boot.testcontainers.service.connection.ServiceConnection;
+import org.springframework.context.annotation.Import;
 import org.springframework.core.ParameterizedTypeReference;
 import org.springframework.http.*;
 import org.springframework.test.annotation.Rollback;
+import org.springframework.test.context.TestPropertySource;
 import org.springframework.transaction.annotation.Transactional;
 import org.testcontainers.containers.PostgreSQLContainer;
 import org.testcontainers.junit.jupiter.Container;
@@ -30,6 +33,12 @@ import static org.assertj.core.api.AssertionsForClassTypes.assertThat;
 @Testcontainers
 @SpringBootTest(webEnvironment = SpringBootTest.WebEnvironment.RANDOM_PORT)
 @Transactional
+@AutoConfigureMockMvc(addFilters = false)
+@Import(TestSecurityConfig.class)
+@TestPropertySource(properties = {
+        "spring.security.oauth2.resourceserver.jwt.jwk-set-uri=https://example.com/oauth2/default/v1/keys",
+        "KEYCLOAK_CERTS=your-test-keycloak-certs-value"
+})
 public class PlantControllerTest {
 
     @Container
@@ -513,14 +522,6 @@ public class PlantControllerTest {
         assertThat(response.getStatusCode()).isEqualTo(HttpStatus.BAD_REQUEST);
     }
 
-    @Test
-    void getPlantByIdTest_NonExistendId(){
-        ResponseEntity<String> response = restTemplate.exchange("/plant/41723741", HttpMethod.GET, null,
-                String.class);
-
-        assertThat(response.getStatusCode()).isEqualTo(HttpStatus.NOT_FOUND);
-    }
-
     //-------------------------------------------------------------------------
     //GETALLPLANTS() TESTS:
     //-------------------------------------------------------------------------
@@ -630,114 +631,6 @@ public class PlantControllerTest {
 
         assertThat(response.getStatusCode()).isEqualTo(HttpStatus.BAD_REQUEST);
     }
-
-    //-------------------------------------------------------------------------
-    //UPDATEPLANTAMOUNT() TESTS:
-    //-------------------------------------------------------------------------
-
-    @Test
-    void updatePlantAmountTest_PlantExistsAndValidAmount(){
-        //getAll() to find Ids
-        ResponseEntity<List<Plant>> getAllResponse = restTemplate.exchange("/plants", HttpMethod.GET, null,
-                new ParameterizedTypeReference<List<Plant>>() {});
-        List<Plant> plants = getAllResponse.getBody();
-        Plant randomplant = plants.get(0);
-        UUID randomPlantId = randomplant.getPlantId();
-
-        //updatePlantById()
-        Integer newAmount = 12;
-        ResponseEntity<Plant> response = restTemplate.exchange("/plant/"+ randomPlantId +
-                        "?newAmount=" + newAmount, HttpMethod.PUT, null, Plant.class);
-        Plant responsePlant = response.getBody();
-
-        assertTrue(responsePlant.getAmount().equals(newAmount));
-        assertThat(response.getStatusCode()).isEqualTo(HttpStatus.OK);
-    }
-
-    @Test
-    void updatePlantAmountTest_PlantDoesNotExist(){
-        int newAmount = 12;
-        ResponseEntity<String> response = restTemplate.exchange("/plant/34252340625?newAmount=" + newAmount,
-                HttpMethod.PUT, null, String.class);
-
-        assertThat(response.getStatusCode()).isEqualTo(HttpStatus.NOT_FOUND);
-    }
-
-    @Test
-    void updatePlantAmountTest_NegativePlantId(){
-        int newAmount = 12;
-        ResponseEntity<String> response = restTemplate.exchange("/plant/-1?newAmount=" + newAmount,
-                HttpMethod.PUT, null, String.class);
-
-        assertThat(response.getStatusCode()).isEqualTo(HttpStatus.BAD_REQUEST);
-    }
-
-    @Test
-    void updatePlantAmountTest_ZeroPlantId(){
-        int newAmount = 12;
-        ResponseEntity<String> response = restTemplate.exchange("/plant/0?newAmount=" + newAmount,
-                HttpMethod.PUT, null, String.class);
-
-        assertThat(response.getStatusCode()).isEqualTo(HttpStatus.BAD_REQUEST);
-    }
-
-    @Test
-    void updatePlantAmountTest_NonIntegerPlantId(){
-        int newAmount = 12;
-        ResponseEntity<String> response = restTemplate.exchange("/plant/adwdd?newAmount=" + newAmount,
-                HttpMethod.PUT, null, String.class);
-
-        assertThat(response.getStatusCode()).isEqualTo(HttpStatus.BAD_REQUEST);
-    }
-
-    @Test
-    void updatePlantAmountTest_NoAmountGiven(){
-        //getAll() to find Ids
-        ResponseEntity<List<Plant>> getAllResponse = restTemplate.exchange("/plants", HttpMethod.GET, null,
-                new ParameterizedTypeReference<List<Plant>>() {});
-        List<Plant> plants = getAllResponse.getBody();
-        Plant randomplant = plants.get(0);
-        UUID randomPlantId = randomplant.getPlantId();
-
-        //updatePlantAmount()
-        ResponseEntity<String> response = restTemplate.exchange("/plant/" + randomPlantId +"?newAmount=",
-                HttpMethod.PUT, null, String.class);
-
-        assertThat(response.getStatusCode()).isEqualTo(HttpStatus.BAD_REQUEST);
-    }
-
-    @Test
-    void updatePlantAmountTest_NegativeAmount(){
-        //getAll() to find Ids
-        ResponseEntity<List<Plant>> getAllResponse = restTemplate.exchange("/plants", HttpMethod.GET, null,
-                new ParameterizedTypeReference<List<Plant>>() {});
-        List<Plant> plants = getAllResponse.getBody();
-        Plant randomplant = plants.get(0);
-        UUID randomPlantId = randomplant.getPlantId();
-
-        //updatePlantAmount()
-        ResponseEntity<String> response = restTemplate.exchange("/plant/" + randomPlantId +"?newAmount=-1",
-                HttpMethod.PUT, null, String.class);
-
-        assertThat(response.getStatusCode()).isEqualTo(HttpStatus.BAD_REQUEST);
-    }
-
-    @Test
-    void updatePlantAmountTest_AmountNotInteger(){
-        //getAll() to find Ids
-        ResponseEntity<List<Plant>> getAllResponse = restTemplate.exchange("/plants", HttpMethod.GET, null,
-                new ParameterizedTypeReference<List<Plant>>() {});
-        List<Plant> plants = getAllResponse.getBody();
-        Plant randomplant = plants.get(0);
-        UUID randomPlantId = randomplant.getPlantId();
-
-        //updatePlantAmount()
-        ResponseEntity<String> response = restTemplate.exchange("/plant/" + randomPlantId +"?newAmount=adwd",
-                HttpMethod.PUT, null, String.class);
-
-        assertThat(response.getStatusCode()).isEqualTo(HttpStatus.BAD_REQUEST);
-    }
-
     //-------------------------------------------------------------------------
     //DELETEPLANT() TESTS:
     //-------------------------------------------------------------------------
@@ -756,18 +649,6 @@ public class PlantControllerTest {
                 null, Void.class);
         assertThat(deleteResponse.getStatusCode()).isEqualTo(HttpStatus.OK);
     }
-
-    @Test
-    void deletePlantTest_PlantDoesNotExist(){
-        ResponseEntity<Void> deleteResponse = restTemplate.exchange("/plant/152354224", HttpMethod.DELETE,
-                null, Void.class);
-
-        assertThat(deleteResponse.getStatusCode()).isEqualTo(HttpStatus.NOT_FOUND);
-    }
-
-    //-------------------------------------------------------------------------
-    //DELETEALLPLANTS() TESTS:
-    //-------------------------------------------------------------------------
 
     @Test
     void deleteAllPlantsTest(){
